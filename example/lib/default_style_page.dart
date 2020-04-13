@@ -23,12 +23,17 @@ class _DefaultStylePageState extends State<DefaultStylePage> {
   void initState() {
     super.initState();
     DateTime now = DateTime.now();
+    DateModel date = new DateModel();
+    date.year = now.year;
+    date.month = now.month;
+    date.day = now.day;
     controller = new CalendarController(
-        minYear: now.year - 1,
-        minYearMonth: 1,
-        maxYear: now.year + 1,
-        maxYearMonth: 12,
-        showMode: CalendarConstants.MODE_SHOW_MONTH_AND_WEEK);
+      selectDateModel: date,
+      minYear: now.year - 1,
+      minYearMonth: 1,
+      maxYear: now.year + 1,
+      maxYearMonth: 12,
+      showMode: CalendarConstants.MODE_SHOW_MONTH_AND_WEEK);
 
     controller.addMonthChangeListener(
       (year, month) {
