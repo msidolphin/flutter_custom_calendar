@@ -7,6 +7,8 @@ import 'package:flutter_custom_calendar/utils/date_util.dart';
 import 'package:flutter_custom_calendar/widget/month_view.dart';
 import 'package:provider/provider.dart';
 
+import 'item_container.dart';
+
 /**
  * 周视图，只显示本周的日子
  */
@@ -85,7 +87,7 @@ class _WeekViewState extends State<WeekView> {
               dateModel.isSelected = false;
             }
           } else {
-            if (calendarProvider.selectDateModel == dateModel) {
+            if (calendarProvider.selectDateModel?.toString() == dateModel.toString()) {
               dateModel.isSelected = true;
             } else {
               dateModel.isSelected = false;
@@ -94,8 +96,8 @@ class _WeekViewState extends State<WeekView> {
 
           return ItemContainer(
             dateModel: dateModel,
-//            configuration: configuration,
-//            calendarProvider: calendarProvider,
+            key: ObjectKey(
+                dateModel),
           );
         });
   }
