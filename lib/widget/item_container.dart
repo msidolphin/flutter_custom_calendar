@@ -34,6 +34,9 @@ class ItemContainerState extends State<ItemContainer> {
 
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       calendarProvider?.selectedUtil?.add(null, dateModel, this);
+      if (dateModel.isSelected) {
+        calendarProvider?.lastClickItemState = this;
+      }
     });
   }
 
