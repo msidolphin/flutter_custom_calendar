@@ -8,6 +8,8 @@ import 'package:flutter_custom_calendar/controller.dart';
 import 'package:flutter_custom_calendar/model/date_model.dart';
 import 'package:flutter_custom_calendar/utils/LogUtil.dart';
 import 'package:flutter_custom_calendar/utils/date_util.dart';
+import 'package:flutter_custom_calendar/utils/selected_util.dart';
+import 'package:flutter_custom_calendar/widget/item_container.dart';
 import 'package:flutter_custom_calendar/widget/month_view.dart';
 
 /**
@@ -21,6 +23,7 @@ class CalendarProvider extends ChangeNotifier {
   DateModel _selectDateModel; //当前选中的日期，用于单选
   ItemContainerState lastClickItemState;
   DateModel _lastClickDateModel;
+  SelectedUtil selectedUtil = new SelectedUtil();
 
   double get totalHeight => _totalHeight;
 
@@ -189,4 +192,12 @@ class CalendarProvider extends ChangeNotifier {
     selectDateModel = null;
     calendarConfiguration = null;
   }
+
+  @override
+  void dispose() {
+    selectedUtil.clean();
+    super.dispose();
+  }
+
+
 }

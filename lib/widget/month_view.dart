@@ -7,7 +7,10 @@ import 'package:flutter_custom_calendar/constants/constants.dart';
 import 'package:flutter_custom_calendar/model/date_model.dart';
 import 'package:flutter_custom_calendar/utils/LogUtil.dart';
 import 'package:flutter_custom_calendar/utils/date_util.dart';
+import 'package:flutter_custom_calendar/utils/selected_util.dart';
 import 'package:provider/provider.dart';
+
+import 'item_container.dart';
 
 /**
  * 月视图，显示整个月的日子
@@ -43,7 +46,7 @@ class _MonthViewState extends State<MonthView>
     super.initState();
     extraDataMap = widget.configuration.extraDataMap;
     DateModel firstDayOfMonth =
-        DateModel.fromDateTime(DateTime(widget.year, widget.month, 1));
+    DateModel.fromDateTime(DateTime(widget.year, widget.month, 1));
     if (CacheData.getInstance().monthListCache[firstDayOfMonth]?.isNotEmpty ==
         true) {
       LogUtil.log(TAG: this.runtimeType, message: "缓存中有数据");
@@ -98,7 +101,7 @@ class _MonthViewState extends State<MonthView>
     LogUtil.log(TAG: this.runtimeType, message: "_MonthViewState build");
 
     CalendarProvider calendarProvider =
-        Provider.of<CalendarProvider>(context, listen: false);
+    Provider.of<CalendarProvider>(context, listen: false);
     CalendarConfiguration configuration =
         calendarProvider.calendarConfiguration;
 
@@ -119,7 +122,7 @@ class _MonthViewState extends State<MonthView>
               dateModel.isSelected = false;
             }
           } else {
-            if (calendarProvider.selectDateModel == dateModel) {
+            if (calendarProvider.selectDateModel?.toString() == dateModel.toString()) {
               dateModel.isSelected = true;
             } else {
               dateModel.isSelected = false;
@@ -136,142 +139,4 @@ class _MonthViewState extends State<MonthView>
 
   @override
   bool get wantKeepAlive => true;
-}
-
-/**
- * 多选模式，包装item，这样的话，就只需要刷新当前点击的item就行了，不需要刷新整个页面
- */
-class ItemContainer extends StatefulWidget {
-  final DateModel dateModel;
-
-  const ItemContainer({
-    Key key,
-    this.dateModel,
-  }) : super(key: key);
-
-  @override
-  ItemContainerState createState() => ItemContainerState();
-}
-
-class ItemContainerState extends State<ItemContainer> {
-  DateModel dateModel;
-  CalendarConfiguration configuration;
-  CalendarProvider calendarProvider;
-
-  ValueNotifier<bool> isSelected;
-
-  @override
-  void initState() {
-    super.initState();
-    dateModel = widget.dateModel;
-    isSelected = ValueNotifier(dateModel.isSelected);
-
-//    先注释掉这段代码
-//    WidgetsBinding.instance.addPostFrameCallback((callback) {
-//      if (configuration.selectMode == CalendarConstants.MODE_SINGLE_SELECT &&
-//          dateModel.isSelected) {
-//        calendarProvider.lastClickItemState = this;
-//      }
-//    });
-  }
-
-  /**
-   * 提供方法给外部，可以调用这个方法进行刷新item
-   */
-  void refreshItem(bool v) {
-    /**
-        Exception caught by gesture
-        The following assertion was thrown while handling a gesture:
-        setState() called after dispose()
-     */
-    if (mounted) {
-      setState(() {
-        dateModel.isSelected = v;
-//        isSelected.value = !isSelected.value;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-//    LogUtil.log(TAG: this.runtimeType, message: "ItemContainerState build");
-    calendarProvider = Provider.of<CalendarProvider>(context, listen: false);
-    configuration = calendarProvider.calendarConfiguration;
-
-    return GestureDetector(
-      //点击整个item都会触发事件
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        LogUtil.log(
-            TAG: this.runtimeType,
-            message: "GestureDetector onTap: $dateModel}");
-
-        //范围外不可点击
-        if (!dateModel.isInRange) {
-          //多选回调
-          if (configuration.selectMode == CalendarConstants.MODE_MULTI_SELECT) {
-            configuration.multiSelectOutOfRange();
-          }
-          return;
-        }
-
-        calendarProvider.lastClickDateModel = dateModel;
-
-        if (configuration.selectMode == CalendarConstants.MODE_MULTI_SELECT) {
-          if (calendarProvider.selectedDateList.contains(dateModel)) {
-            calendarProvider.selectedDateList.remove(dateModel);
-          } else {
-            //多选，判断是否超过限制，超过范围
-            if (calendarProvider.selectedDateList.length ==
-                configuration.maxMultiSelectCount) {
-              if (configuration.multiSelectOutOfSize != null) {
-                configuration.multiSelectOutOfSize();
-              }
-              return;
-            }
-            calendarProvider.selectedDateList.add(dateModel);
-          }
-          if (configuration.calendarSelect != null) {
-            configuration.calendarSelect(dateModel);
-          }
-
-          //多选也可以弄这些单选的代码
-          calendarProvider.selectDateModel = dateModel;
-        } else {
-          calendarProvider.selectDateModel = dateModel;
-          if (configuration.calendarSelect != null) {
-            configuration.calendarSelect(dateModel);
-          }
-
-          //单选需要刷新上一个item
-          if (calendarProvider.lastClickItemState != this) {
-            calendarProvider.lastClickItemState?.refreshItem(false);
-            calendarProvider.lastClickItemState = this;
-          }
-        }
-        refreshItem(!this.dateModel.isSelected);
-      },
-      child: configuration.dayWidgetBuilder(dateModel),
-    );
-  }
-
-  @override
-  void deactivate() {
-//    LogUtil.log(
-//        TAG: this.runtimeType, message: "ItemContainerState deactivate");
-    super.deactivate();
-  }
-
-  @override
-  void dispose() {
-//    LogUtil.log(TAG: this.runtimeType, message: "ItemContainerState dispose");
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(ItemContainer oldWidget) {
-//    LogUtil.log(
-//        TAG: this.runtimeType, message: "ItemContainerState didUpdateWidget");
-    super.didUpdateWidget(oldWidget);
-  }
 }
