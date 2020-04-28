@@ -5,6 +5,8 @@ import 'package:flutter_custom_calendar/controller.dart';
 import 'package:flutter_custom_calendar/model/date_model.dart';
 import 'package:flutter/foundation.dart';
 
+import 'cache_data.dart';
+
 /**
  * 配置信息类
  */
@@ -40,6 +42,9 @@ class CalendarConfiguration {
   HashSet<DateModel> defaultSelectedDateList; //默认被选中的日期set，用于多选
   int maxMultiSelectCount; //多选，最多选多少个
   Map<DateModel, Object> extraDataMap = new Map(); //自定义额外的数据
+
+  /// 缓存
+  CacheData cacheData = CacheData.getInstance();
 
   /**
    * UI绘制方面的绘制

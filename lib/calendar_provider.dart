@@ -187,7 +187,7 @@ class CalendarProvider extends ChangeNotifier {
   //退出的时候，清除数据
   void clearData() {
     LogUtil.log(TAG: this.runtimeType, message: "CalendarProvider clearData");
-    CacheData.getInstance().clearData();
+    calendarConfiguration.cacheData.clearData();
     selectedDateList.clear();
     selectDateModel = null;
     calendarConfiguration = null;

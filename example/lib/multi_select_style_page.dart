@@ -19,12 +19,14 @@ class _MultiSelectStylePageState extends State<MultiSelectStylePage> {
 
   CalendarController controller;
 
+  CalendarController controller1;
+
   @override
   void initState() {
     super.initState();
     controller = new CalendarController(
       selectMode: CalendarConstants.MODE_MULTI_SELECT,
-      maxMultiSelectCount: 5,
+//      maxMultiSelectCount: 5,
       minSelectYear: 2019,
       minSelectMonth: 5,
       minSelectDay: 20,
@@ -32,6 +34,17 @@ class _MultiSelectStylePageState extends State<MultiSelectStylePage> {
         DateTime.now(),
       }
     );
+    controller1 = new CalendarController(
+        selectMode: CalendarConstants.MODE_MULTI_SELECT,
+//      maxMultiSelectCount: 5,
+        minSelectYear: 2019,
+        minSelectMonth: 5,
+        minSelectDay: 20,
+        selectedDateTimeList: {
+          DateTime.now(),
+        }
+    );
+
 
     controller.addMonthChangeListener(
       (year, month) {
@@ -58,7 +71,7 @@ class _MultiSelectStylePageState extends State<MultiSelectStylePage> {
         title: Text(widget.title),
       ),
       body: new Container(
-        child: new Column(
+        child: new ListView(
           children: <Widget>[
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -82,6 +95,14 @@ class _MultiSelectStylePageState extends State<MultiSelectStylePage> {
             ),
             CalendarViewWidget(
                 calendarController: controller,
+                weekBarItemWidgetBuilder: () {
+                  return CustomStyleWeekBarItem();
+                },
+                dayWidgetBuilder: (dateModel) {
+                  return CustomStyleDayWidget(dateModel);
+                }),
+            CalendarViewWidget(
+                calendarController: controller1,
                 weekBarItemWidgetBuilder: () {
                   return CustomStyleWeekBarItem();
                 },

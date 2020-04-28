@@ -47,14 +47,14 @@ class _MonthViewState extends State<MonthView>
     extraDataMap = widget.configuration.extraDataMap;
     DateModel firstDayOfMonth =
     DateModel.fromDateTime(DateTime(widget.year, widget.month, 1));
-    if (CacheData.getInstance().monthListCache[firstDayOfMonth]?.isNotEmpty ==
+    if (widget.configuration.cacheData.monthListCache[firstDayOfMonth]?.isNotEmpty ==
         true) {
       LogUtil.log(TAG: this.runtimeType, message: "缓存中有数据");
-      items = CacheData.getInstance().monthListCache[firstDayOfMonth];
+      items = widget.configuration.cacheData.monthListCache[firstDayOfMonth];
     } else {
       LogUtil.log(TAG: this.runtimeType, message: "缓存中无数据");
       getItems().then((_) {
-        CacheData.getInstance().monthListCache[firstDayOfMonth] = items;
+        widget.configuration.cacheData.monthListCache[firstDayOfMonth] = items;
       });
     }
 
