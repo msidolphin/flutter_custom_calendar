@@ -42,12 +42,8 @@ class CalendarController {
       int maxYearMonth = 12,
       int nowYear,
       int nowMonth,
-      int minSelectYear = 1971,
-      int minSelectMonth = 1,
-      int minSelectDay = 1,
-      int maxSelectYear = 2055,
-      int maxSelectMonth = 12,
-      int maxSelectDay = 30,
+      DateTime minSelectDate,
+      DateTime maxSelectDate,
       Set<DateTime> selectedDateTimeList = EMPTY_SET, //多选模式下，默认选中的item列表
       DateModel selectDateModel, //单选模式下，默认选中的item
       int maxMultiSelectCount = 9999,
@@ -63,6 +59,12 @@ class CalendarController {
     if (nowMonth == null) {
       nowMonth = DateTime.now().month;
     }
+    if (minSelectDate == null) {
+      minSelectDate = new DateTime(1971, 1, 1);
+    }
+    if (maxSelectDate == null) {
+      maxSelectDate = new DateTime(2055, 12, 30);
+    }
     calendarConfiguration = CalendarConfiguration(
         selectMode: selectMode,
         showMode: showMode,
@@ -71,14 +73,10 @@ class CalendarController {
         maxYearMonth: maxYearMonth,
         nowYear: nowYear,
         nowMonth: nowMonth,
-        minSelectYear: minSelectYear,
-        minSelectMonth: minSelectMonth,
         minYearMonth: minYearMonth,
-        minSelectDay: minSelectDay,
-        maxSelectYear: maxSelectYear,
-        maxSelectMonth: maxSelectMonth,
+        minSelectDate: DateModel.fromDateTime(minSelectDate),
+        maxSelectDate: DateModel.fromDateTime(maxSelectDate),
         extraDataMap: extraDataMap,
-        maxSelectDay: maxSelectDay,
         maxMultiSelectCount: maxMultiSelectCount,
         selectDateModel: selectDateModel,
         offset: offset);
@@ -92,14 +90,6 @@ class CalendarController {
     calendarProvider.selectDateModel = selectDateModel;
     calendarProvider.selectedDateList =
         calendarConfiguration.defaultSelectedDateList;
-    calendarConfiguration.minSelectDate = DateModel.fromDateTime(DateTime(
-        calendarConfiguration.minSelectYear,
-        calendarConfiguration.minSelectMonth,
-        calendarConfiguration.minSelectDay));
-    calendarConfiguration.maxSelectDate = DateModel.fromDateTime(DateTime(
-        calendarConfiguration.maxSelectYear,
-        calendarConfiguration.maxSelectMonth,
-        calendarConfiguration.maxSelectDay));
 
     LogUtil.log(
         TAG: this.runtimeType,

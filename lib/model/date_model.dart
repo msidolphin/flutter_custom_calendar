@@ -70,12 +70,12 @@ class DateModel {
 
   int get lunarDay => lunar[2];
 
+
   @override
   String toString() {
-    return 'DateModel{year: $year, month: $month, day: $day}';
-  } //如果是闰月，则返回闰月
+    return 'DateModel{year: $year, month: $month, day: $day, lunar: $lunar, isCurrentMonth: $isCurrentMonth, isInRange: $isInRange}';
+  } //转化成DateTime格式
 
-  //转化成DateTime格式
   DateTime getDateTime() {
     return new DateTime(year, month, day);
   }

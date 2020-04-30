@@ -29,15 +29,6 @@ class CalendarConfiguration {
   int nowYear;
   int nowMonth;
 
-  //可操作的范围设置,比如点击选择
-  int minSelectYear;
-  int minSelectMonth;
-  int minSelectDay;
-
-  int maxSelectYear;
-  int maxSelectMonth;
-  int maxSelectDay; //注意：不能超过对应月份的总天数
-
   DateModel selectDateModel; //默认被选中的item，用于单选
   HashSet<DateModel> defaultSelectedDateList; //默认被选中的日期set，用于多选
   int maxMultiSelectCount; //多选，最多选多少个
@@ -95,12 +86,8 @@ class CalendarConfiguration {
       this.maxYearMonth,
       this.nowYear,
       this.nowMonth,
-      this.minSelectYear,
-      this.minSelectMonth,
-      this.minSelectDay,
-      this.maxSelectYear,
-      this.maxSelectMonth,
-      this.maxSelectDay,
+      this.minSelectDate,
+      this.maxSelectDate,
       this.defaultSelectedDateList,
       this.selectDateModel,
       this.maxMultiSelectCount,
@@ -116,8 +103,5 @@ class CalendarConfiguration {
       this.margin,
       this.offset = 0});
 
-  @override
-  String toString() {
-    return 'CalendarConfiguration{selectMode: $selectMode, minYear: $minYear, maxYear: $maxYear, minYearMonth: $minYearMonth, maxYearMonth: $maxYearMonth, nowYear: $nowYear, nowMonth: $nowMonth, minSelectYear: $minSelectYear, minSelectMonth: $minSelectMonth, minSelectDay: $minSelectDay, maxSelectYear: $maxSelectYear, maxSelectMonth: $maxSelectMonth, maxSelectDay: $maxSelectDay, defaultSelectedDateList: $defaultSelectedDateList, maxMultiSelectCount: $maxMultiSelectCount, extraDataMap: $extraDataMap, monthList: $monthList, weekList: $weekList, monthController: $monthController, weekController: $weekController}';
-  }
+
 }

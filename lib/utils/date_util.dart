@@ -167,6 +167,7 @@ class DateUtil {
       } else {
         dateModel.isInRange = false;
       }
+      print(dateModel);
       //将自定义额外的数据，存储到相应的model中
       if (extraDataMap?.isNotEmpty == true) {
         if (extraDataMap.containsKey(dateModel)) {

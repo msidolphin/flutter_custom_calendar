@@ -73,7 +73,7 @@ class ItemContainerState extends State<ItemContainer> {
         if (!dateModel.isInRange) {
           //多选回调
           if (configuration.selectMode == CalendarConstants.MODE_MULTI_SELECT) {
-            configuration.multiSelectOutOfRange();
+            configuration.multiSelectOutOfRange?.call();
           }
           return;
         }

@@ -26,20 +26,17 @@ class _MultiSelectStylePageState extends State<MultiSelectStylePage> {
     super.initState();
     controller = new CalendarController(
       selectMode: CalendarConstants.MODE_MULTI_SELECT,
-//      maxMultiSelectCount: 5,
-      minSelectYear: 2019,
-      minSelectMonth: 5,
-      minSelectDay: 20,
-      selectedDateTimeList: {
-        DateTime.now(),
-      }
+        maxYear: DateTime.now().year,
+        maxYearMonth: DateTime.now().month,
+        minSelectDate: DateTime(2019, 5, 20),
+        maxSelectDate: DateTime.now().add(Duration(days: 1)),
+        selectedDateTimeList: {
+          DateTime.now(),
+        }
     );
     controller1 = new CalendarController(
         selectMode: CalendarConstants.MODE_MULTI_SELECT,
 //      maxMultiSelectCount: 5,
-        minSelectYear: 2019,
-        minSelectMonth: 5,
-        minSelectDay: 20,
         selectedDateTimeList: {
           DateTime.now(),
         }
