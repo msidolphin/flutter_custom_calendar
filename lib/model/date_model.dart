@@ -73,7 +73,7 @@ class DateModel {
 
   @override
   String toString() {
-    return 'DateModel{year: $year, month: $month, day: $day, lunar: $lunar, isCurrentMonth: $isCurrentMonth, isInRange: $isInRange}';
+    return 'DateModel{year: $year, month: $month, day: $day}';
   } //转化成DateTime格式
 
   DateTime getDateTime() {
