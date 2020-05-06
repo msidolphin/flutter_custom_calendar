@@ -195,6 +195,11 @@ class CalendarController {
     this.calendarConfiguration.calendarSelect = listener;
   }
 
+  /// 日期是否可以被
+  void addDateSelectable(DateSelectable dateSelectable) {
+    this.calendarConfiguration.dateSelectable = dateSelectable;
+  }
+
   //多选超出指定范围
   void addOnMultiSelectOutOfRangeListener(OnMultiSelectOutOfRange listener) {
     this.calendarConfiguration.multiSelectOutOfRange = listener;
@@ -502,79 +507,56 @@ class CalendarController {
   }
 }
 
-/**
- * 默认的weekBar
- */
+/// 默认的weekBar
 Widget defaultWeekBarWidget() {
   return const DefaultWeekBar();
 }
 
-/**
- * 使用canvas绘制item
- */
+/// 使用canvas绘制item
 Widget defaultCustomDayWidget(DateModel dateModel) {
   return DefaultCustomDayWidget(
     dateModel,
   );
 }
 
-/**
- * 使用组合widget的方式构造item
- */
+/// 使用组合widget的方式构造item
 Widget defaultCombineDayWidget(DateModel dateModel) {
   return new DefaultCombineDayWidget(
     dateModel,
   );
 }
 
-/**
- * 判断是否在范围内，不在范围内的话，可以置灰
- */
+/// 判断是否在范围内，不在范围内的话，可以置灰
 bool defaultInRange(DateModel dateModel) {
   return true;
 }
 
-/**
- * 周视图切换
- */
+/// 周视图切换
 typedef void OnWeekChange(int year, int month);
 
-/**
- * 月份切换事件
- */
+/// 月份切换事件
 typedef void OnMonthChange(int year, int month);
 
-/**
- * 日期选择事件
- */
+/// 日期选择事件
 typedef void OnCalendarSelect(DateModel dateModel);
 
-/**
- * 多选超出指定范围
- */
+/// 日期是否可选
+typedef bool DateSelectable(DateModel dateModel);
+
+/// 多选超出指定范围
 typedef void OnMultiSelectOutOfRange();
 
-/**
- * 多选超出限制个数
- */
+/// 多选超出限制个数
 typedef void OnMultiSelectOutOfSize();
 
-/**
- * 可以创建自定义样式的item
- */
+/// 可以创建自定义样式的item
 typedef Widget DayWidgetBuilder(DateModel dateModel);
 
-/**
- * 是否可以点击，外部来进行判断，默认都可以点击
- */
+/// 是否可以点击，外部来进行判断，默认都可以点击
 typedef bool CanClick(DateModel dateModel);
 
-/**
- * 可以自定义绘制每个Item，这种扩展性好一点，以后可以提供给外部进行自定义绘制
- */
+/// 可以自定义绘制每个Item，这种扩展性好一点，以后可以提供给外部进行自定义绘制
 typedef void DrawDayWidget(DateModel dateModel, Canvas canvas, Size size);
 
-/**
- * 自定义顶部weekBar
- */
+/// 自定义顶部weekBar
 typedef Widget WeekBarItemWidgetBuilder();

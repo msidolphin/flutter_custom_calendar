@@ -56,6 +56,9 @@ class CalendarConfiguration {
   //各种事件回调
   OnMonthChange monthChange; //月份切换事件 （已弃用,交给multiMonthChanges来实现）
   OnCalendarSelect calendarSelect; //点击选择事件
+  DateSelectable dateSelectable = (DateModel dateModel) {
+    return true;
+  }; // 日期是否可以选中
   OnMultiSelectOutOfRange multiSelectOutOfRange; //多选超出指定范围
   OnMultiSelectOutOfSize multiSelectOutOfSize; //多选超出限制个数
 
@@ -63,6 +66,7 @@ class CalendarConfiguration {
       ObserverList<OnMonthChange>(); //保存多个月份监听的事件
   ObserverList<OnWeekChange> weekChangeListeners =
       ObserverList<OnWeekChange>(); //周视图切换
+
 
   /**
    * 下面的信息不是配置的，是根据配置信息进行计算出来的
@@ -101,7 +105,7 @@ class CalendarConfiguration {
       this.showMode,
       this.padding,
       this.margin,
-      this.offset = 0});
+      this.offset = 0,});
 
 
 }

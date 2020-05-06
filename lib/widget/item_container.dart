@@ -78,6 +78,10 @@ class ItemContainerState extends State<ItemContainer> {
           return;
         }
 
+        bool selectable = configuration.dateSelectable?.call(dateModel);
+
+        if (selectable != null && !selectable) return;
+
         calendarProvider.lastClickDateModel = dateModel;
 
         if (configuration.selectMode == CalendarConstants.MODE_MULTI_SELECT) {

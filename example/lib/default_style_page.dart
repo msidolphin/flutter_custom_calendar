@@ -41,6 +41,10 @@ class _DefaultStylePageState extends State<DefaultStylePage> {
       },
     );
 
+    controller.addDateSelectable((DateModel dateModel) {
+      return dateModel.isCurrentMonth;
+    });
+
     controller.addOnCalendarSelectListener((dateModel) {
       //刷新选择的时间
       selectText.value =
