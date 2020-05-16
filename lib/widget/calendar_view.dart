@@ -43,7 +43,7 @@ class CalendarViewWidget extends StatefulWidget {
       this.boxDecoration,
       this.padding = EdgeInsets.zero,
       this.margin = EdgeInsets.zero,
-      this.verticalSpacing = 10,
+      this.verticalSpacing = 0,
       this.itemSize})
       : super(key: key);
 
